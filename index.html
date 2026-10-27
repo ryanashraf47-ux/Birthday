@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>يوم مميز</title>
+    <!-- مكتبة الكونفيتي للتأثير الأخير -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap');
         
@@ -71,14 +73,14 @@
             background-color: #A3284F; 
         }
         
-        /* تنسيق العداد جنب بعضه بشكل متناسق ومضبوط */
+        /* تنسيق العداد جنب بعضه بشكل متناسق */
         .counter-box { 
             display: flex; 
             justify-content: center; 
             align-items: center; 
             gap: 6px; 
             margin: 20px 0; 
-            direction: ltr; /* عشان الترتيب يكون من اليمين للشمال بالإنجليزية أو متناسق */
+            direction: ltr; 
         }
         
         .time-box { 
@@ -202,10 +204,10 @@
     <!-- القسم 5: المعنى -->
     <div id="sec5" class="section">
         <h2>بمعني تاني كل احساس حلو عشتو معاكي انتي وبس</h2>
-        <button onclick="nextSection(5, 6)">كملي</button>
+        <button onclick="nextSection(5, 6); triggerConfetti();">كملي</button>
     </div>
 
-    <!-- القسم 6: النهاية والفيديو -->
+    <!-- القسم 6: النهاية والفيديو وتأثير الكونفيتي -->
     <div id="sec6" class="section">
         <h2 style="color: #FFD1DC; margin-bottom: 25px;">كل سنه وانتي طيبه يا احلى حاجه فحياتي</h2>
         <div id="video-container">
@@ -262,6 +264,33 @@
             scrollElement.addEventListener('animationend', function() {
                 nextSection(4, 5); 
             }, { once: true });
+        }
+
+        // تأثير الكونفيتي والاحتفال في الصفحة الأخيرة
+        function triggerConfetti() {
+            var duration = 3 * 1000;
+            var end = Date.now() + duration;
+
+            (function frame() {
+                confetti({
+                    particleCount: 4,
+                    angle: 60,
+                    spread: 55,
+                    origin: { x: 0 },
+                    colors: ['#FFD1DC', '#ffffff', '#8B1E3F']
+                });
+                confetti({
+                    particleCount: 4,
+                    angle: 120,
+                    spread: 55,
+                    origin: { x: 1 },
+                    colors: ['#FFD1DC', '#ffffff', '#8B1E3F']
+                });
+
+                if (Date.now() < end) {
+                    requestAnimationFrame(frame);
+                }
+            }());
         }
     </script>
 </body>

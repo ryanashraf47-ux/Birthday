@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>يوم مميز</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Amiri&family=Tajawal:wght@400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap');
         
         body { 
             margin: 0; 
@@ -71,39 +71,44 @@
             background-color: #A3284F; 
         }
         
+        /* تنسيق العداد جنب بعضه بشكل متناسق ومضبوط */
         .counter-box { 
             display: flex; 
             justify-content: center; 
-            gap: 8px; 
-            margin: 25px 0; 
-            flex-wrap: wrap; 
+            align-items: center; 
+            gap: 6px; 
+            margin: 20px 0; 
+            direction: ltr; /* عشان الترتيب يكون من اليمين للشمال بالإنجليزية أو متناسق */
         }
         
         .time-box { 
             background: rgba(0,0,0,0.25); 
-            padding: 15px 10px; 
-            border-radius: 15px; 
-            min-width: 65px; 
+            padding: 12px 8px; 
+            border-radius: 12px; 
+            min-width: 55px; 
             border: 1px solid rgba(255,255,255,0.05);
+            text-align: center;
         }
         
         .time-box span { 
             display: block; 
-            font-size: 26px; 
+            font-size: 22px; 
             font-weight: bold; 
-            margin-bottom: 5px;
+            margin-bottom: 3px;
         }
         
         .time-box p { 
             margin: 0; 
-            font-size: 14px; 
+            font-size: 12px; 
             color: #FFD1DC;
+            direction: rtl;
         }
         
+        /* تنسيق الشريط الاحترافي */
         .scroll-wrapper { 
             position: relative; 
             width: 100%; 
-            height: 60px; 
+            height: 70px; 
             overflow: hidden; 
             margin-top: 30px; 
         }
@@ -111,10 +116,20 @@
         .scrolling-text { 
             position: absolute; 
             white-space: nowrap; 
-            font-size: 24px; 
-            font-weight: bold; 
+            display: flex;
+            gap: 15px;
+            animation: scrollRightToLeft 12s linear forwards; 
+        }
+
+        .word-badge {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 20px;
+            font-weight: bold;
             color: #FFD1DC;
-            animation: scrollRightToLeft 10s linear forwards; 
+            backdrop-filter: blur(5px);
         }
         
         @keyframes scrollRightToLeft { 
@@ -134,7 +149,7 @@
             display: block;
         }
 
-        p, h2 { line-height: 1.6; }
+        p, h2, h3 { line-height: 1.6; direction: rtl; }
     </style>
 </head>
 <body>
@@ -159,20 +174,28 @@
     <div id="sec3" class="section">
         <h3 style="color: #FFD1DC;">عداد من اول يوم ابتدا حبنا الحقيقي فيه</h3>
         <div class="counter-box">
-            <div class="time-box"><span id="days">0</span><p>أيام</p></div>
-            <div class="time-box"><span id="hours">0</span><p>ساعات</p></div>
-            <div class="time-box"><span id="minutes">0</span><p>دقائق</p></div>
-            <div class="time-box"><span id="seconds">0</span><p>ثواني</p></div>
+            <div class="time-box"><p>ثواني</p><span id="seconds">0</span></div>
+            <div class="time-box"><p>دقائق</p><span id="minutes">0</span></div>
+            <div class="time-box"><p>ساعات</p><span id="hours">0</span></div>
+            <div class="time-box"><p>أيام</p><span id="days">0</span></div>
         </div>
-        <p style="font-size: 17px;">ومن الوقت ده ابتداء حبنا الحقيقي وكانت مشاعرنا حقيقيه لأول مره يومها بس حسيت إن ملامح بكره اتغيرت وبقت منورة بوجودك وإن الحب الحقيقي مش مجرد كلام ده أمان وطمأنينة لقيتها معاكي أنتِ وبس</p>
+        <p style="font-size: 15px;">ومن الوقت ده ابتداء حبنا الحقيقي وكانت مشاعرنا حقيقيه لأول مره يومها بس حسيت إن ملامح بكره اتغيرت وبقت منورة بوجودك وإن الحب الحقيقي مش مجرد كلام ده أمان وطمأنينة لقيتها معاكي أنتِ وبس</p>
         <button onclick="nextSection(3, 4); startScroll();">كملي</button>
     </div>
 
-    <!-- القسم 4: شريط الكلمات -->
+    <!-- القسم 4: شريط الكلمات الاحترافي -->
     <div id="sec4" class="section">
         <h2>معاكي جربت</h2>
         <div class="scroll-wrapper">
-            <div id="scroll-content" class="scrolling-text">الحب الامان الحنان التفائل الفرحه الحياه الاطمئنان</div>
+            <div id="scroll-content" class="scrolling-text">
+                <span class="word-badge">الحب</span>
+                <span class="word-badge">الامان</span>
+                <span class="word-badge">الحنان</span>
+                <span class="word-badge">التفائل</span>
+                <span class="word-badge">الفرحه</span>
+                <span class="word-badge">الحياه</span>
+                <span class="word-badge">الاطمئنان</span>
+            </div>
         </div>
     </div>
 
@@ -191,7 +214,6 @@
     </div>
 
     <script>
-        // التحقق من كلمة السر
         function checkPassword() {
             if(document.getElementById('password').value === '1011') {
                 document.getElementById('bg-music').play();
@@ -202,13 +224,11 @@
             }
         }
 
-        // التنقل بين الأقسام
         function nextSection(current, next) {
             document.getElementById('sec' + current).classList.remove('active');
             document.getElementById('sec' + next).classList.add('active');
         }
 
-        // تأثير الكتابة
         function typeText() {
             const text = "في يوم مميز زي ده حبيت اني اقولهالك بطريقه مميزه تليق بيكي";
             let i = 0;
@@ -227,7 +247,6 @@
             setTimeout(typeWriter, 500);
         }
 
-        // حساب العداد
         const startDate = new Date("2024-05-05T00:00:00").getTime();
         setInterval(function() {
             const now = new Date().getTime();
@@ -238,11 +257,10 @@
             document.getElementById("seconds").innerText = Math.floor((distance % (1000 * 60)) / 1000);
         }, 1000);
 
-        // مراقبة انتهاء الشريط المتحرك
         function startScroll() {
             const scrollElement = document.getElementById('scroll-content');
             scrollElement.addEventListener('animationend', function() {
-                nextSection(4, 5); // هينقل للقسم الخامس فوراً بدون ثانية تأخير
+                nextSection(4, 5); 
             }, { once: true });
         }
     </script>

@@ -218,6 +218,16 @@
     <script>
         function checkPassword() {
             if(document.getElementById('password').value === '1011') {
+                // تفعيل وضع الشاشة الكاملة تلقائياً عند الدخول
+                let elem = document.documentElement;
+                if (elem.requestFullscreen) {
+                    elem.requestFullscreen().catch(err => {});
+                } else if (elem.webkitRequestFullscreen) { /* Safari */
+                    elem.webkitRequestFullscreen();
+                } else if (elem.msRequestFullscreen) { /* IE11 */
+                    elem.msRequestFullscreen();
+                }
+
                 document.getElementById('bg-music').play();
                 nextSection(1, 2);
                 typeText();

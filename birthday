@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>يوم مميز</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Amiri&family=Tajawal:wght@400;700&display=swap');
+        
+        body { 
+            margin: 0; 
+            padding: 0; 
+            background-color: #4A0E1B; 
+            color: #FFF; 
+            font-family: 'Tajawal', sans-serif; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            min-height: 100vh; 
+            text-align: center; 
+            overflow: hidden; 
+        }
+        
+        .section { 
+            display: none; 
+            width: 90%; 
+            max-width: 500px; 
+            padding: 30px 20px; 
+            background: rgba(255, 255, 255, 0.05); 
+            border: 1px solid rgba(255, 255, 255, 0.1); 
+            border-radius: 20px; 
+            backdrop-filter: blur(10px); 
+        }
+        
+        .active { 
+            display: block; 
+            animation: fadeIn 0.8s ease-in-out; 
+        }
+        
+        @keyframes fadeIn { 
+            from { opacity: 0; transform: translateY(10px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+        
+        input { 
+            padding: 12px; 
+            border-radius: 12px; 
+            border: none; 
+            font-size: 16px; 
+            margin: 15px 0; 
+            text-align: center; 
+            outline: none; 
+            width: 80%; 
+            font-family: 'Tajawal', sans-serif;
+        }
+        
+        button { 
+            background-color: #8B1E3F; 
+            color: white; 
+            border: 1px solid rgba(255,255,255,0.3); 
+            padding: 12px 30px; 
+            border-radius: 25px; 
+            font-size: 18px; 
+            font-family: 'Tajawal', sans-serif; 
+            cursor: pointer; 
+            margin-top: 20px; 
+            transition: 0.3s; 
+        }
+        
+        button:hover { 
+            background-color: #A3284F; 
+        }
+        
+        .counter-box { 
+            display: flex; 
+            justify-content: center; 
+            gap: 8px; 
+            margin: 25px 0; 
+            flex-wrap: wrap; 
+        }
+        
+        .time-box { 
+            background: rgba(0,0,0,0.25); 
+            padding: 15px 10px; 
+            border-radius: 15px; 
+            min-width: 65px; 
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        
+        .time-box span { 
+            display: block; 
+            font-size: 26px; 
+            font-weight: bold; 
+            margin-bottom: 5px;
+        }
+        
+        .time-box p { 
+            margin: 0; 
+            font-size: 14px; 
+            color: #FFD1DC;
+        }
+        
+        .scroll-wrapper { 
+            position: relative; 
+            width: 100%; 
+            height: 60px; 
+            overflow: hidden; 
+            margin-top: 30px; 
+        }
+        
+        .scrolling-text { 
+            position: absolute; 
+            white-space: nowrap; 
+            font-size: 24px; 
+            font-weight: bold; 
+            color: #FFD1DC;
+            animation: scrollRightToLeft 10s linear forwards; 
+        }
+        
+        @keyframes scrollRightToLeft { 
+            0% { right: -100%; } 
+            100% { right: 100%; } 
+        }
+        
+        #video-container { 
+            margin-top: 20px; 
+            border-radius: 15px; 
+            overflow: hidden; 
+        }
+        
+        video { 
+            width: 100%; 
+            border-radius: 15px; 
+            display: block;
+        }
+
+        p, h2 { line-height: 1.6; }
+    </style>
+</head>
+<body>
+    <audio id="bg-music" src="music.mp3" loop></audio>
+
+    <!-- القسم 1: الباسورد -->
+    <div id="sec1" class="section active">
+        <h2>أدخلي كلمة السر</h2>
+        <input type="password" id="password" placeholder="كلمة السر">
+        <br>
+        <button onclick="checkPassword()">دخول</button>
+        <p id="error-msg" style="color: #ffb3b3; display: none; margin-top: 15px;">كلمة السر غير صحيحة</p>
+    </div>
+
+    <!-- القسم 2: الكتابة التلقائية -->
+    <div id="sec2" class="section">
+        <h2 id="typing-text" style="min-height: 80px;"></h2>
+        <button id="start-btn" style="display: none;" onclick="nextSection(2, 3)">اضغطي لو جاهزه نبدأ</button>
+    </div>
+
+    <!-- القسم 3: العداد -->
+    <div id="sec3" class="section">
+        <h3 style="color: #FFD1DC;">عداد من اول يوم ابتدا حبنا الحقيقي فيه</h3>
+        <div class="counter-box">
+            <div class="time-box"><span id="days">0</span><p>أيام</p></div>
+            <div class="time-box"><span id="hours">0</span><p>ساعات</p></div>
+            <div class="time-box"><span id="minutes">0</span><p>دقائق</p></div>
+            <div class="time-box"><span id="seconds">0</span><p>ثواني</p></div>
+        </div>
+        <p style="font-size: 17px;">ومن الوقت ده ابتداء حبنا الحقيقي وكانت مشاعرنا حقيقيه لأول مره يومها بس حسيت إن ملامح بكره اتغيرت وبقت منورة بوجودك وإن الحب الحقيقي مش مجرد كلام ده أمان وطمأنينة لقيتها معاكي أنتِ وبس</p>
+        <button onclick="nextSection(3, 4); startScroll();">كملي</button>
+    </div>
+
+    <!-- القسم 4: شريط الكلمات -->
+    <div id="sec4" class="section">
+        <h2>معاكي جربت</h2>
+        <div class="scroll-wrapper">
+            <div id="scroll-content" class="scrolling-text">الحب الامان الحنان التفائل الفرحه الحياه الاطمئنان</div>
+        </div>
+    </div>
+
+    <!-- القسم 5: المعنى -->
+    <div id="sec5" class="section">
+        <h2>بمعني تاني كل احساس حلو عشتو معاكي انتي وبس</h2>
+        <button onclick="nextSection(5, 6)">كملي</button>
+    </div>
+
+    <!-- القسم 6: النهاية والفيديو -->
+    <div id="sec6" class="section">
+        <h2 style="color: #FFD1DC; margin-bottom: 25px;">كل سنه وانتي طيبه يا احلى حاجه فحياتي</h2>
+        <div id="video-container">
+            <video src="video.mp4" autoplay loop muted playsinline></video>
+        </div>
+    </div>
+
+    <script>
+        // التحقق من كلمة السر
+        function checkPassword() {
+            if(document.getElementById('password').value === '1011') {
+                document.getElementById('bg-music').play();
+                nextSection(1, 2);
+                typeText();
+            } else {
+                document.getElementById('error-msg').style.display = 'block';
+            }
+        }
+
+        // التنقل بين الأقسام
+        function nextSection(current, next) {
+            document.getElementById('sec' + current).classList.remove('active');
+            document.getElementById('sec' + next).classList.add('active');
+        }
+
+        // تأثير الكتابة
+        function typeText() {
+            const text = "في يوم مميز زي ده حبيت اني اقولهالك بطريقه مميزه تليق بيكي";
+            let i = 0;
+            const speed = 70;
+            document.getElementById('typing-text').innerHTML = "";
+            
+            function typeWriter() {
+                if (i < text.length) {
+                    document.getElementById('typing-text').innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, speed);
+                } else {
+                    document.getElementById('start-btn').style.display = 'inline-block';
+                }
+            }
+            setTimeout(typeWriter, 500);
+        }
+
+        // حساب العداد
+        const startDate = new Date("2024-05-05T00:00:00").getTime();
+        setInterval(function() {
+            const now = new Date().getTime();
+            const distance = now - startDate;
+            document.getElementById("days").innerText = Math.floor(distance / (1000 * 60 * 60 * 24));
+            document.getElementById("hours").innerText = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            document.getElementById("minutes").innerText = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            document.getElementById("seconds").innerText = Math.floor((distance % (1000 * 60)) / 1000);
+        }, 1000);
+
+        // مراقبة انتهاء الشريط المتحرك
+        function startScroll() {
+            const scrollElement = document.getElementById('scroll-content');
+            scrollElement.addEventListener('animationend', function() {
+                nextSection(4, 5); // هينقل للقسم الخامس فوراً بدون ثانية تأخير
+            }, { once: true });
+        }
+    </script>
+</body>
+</html>
